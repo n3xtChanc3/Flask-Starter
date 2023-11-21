@@ -7,6 +7,8 @@ import secrets
 from register import register_bp
 from login import login_bp
 from home import home_bp
+from database import db, User
+
 
 # Load environment variables from .env
 load_dotenv()
@@ -17,14 +19,9 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', secrets.token_hex(16))
 
 # SQLite3 Configuration
-app.config['SQLACHEMY_DATABASE_URI'] = os.getenv('DATABASE_URI', 'sqlite:///site.db')
-db = SQLAlchemy(app)
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URI', 'sqlite:///site.db')
+db.init_app(app)
 
-# User Model
-class User(db.Model):
-	id = db.Column(db.Integer, primary_key=True)
-	username = db.Column(db.String(20), unique=True, nullable=False)
-	password = db.Column(db.String(60), nullable=False)
 
 # Create tables
 with app.app_context():

@@ -1,6 +1,8 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from werkzeug.security import generate_password_hash, check_password_hash
-from app import db, User
+from flask_login import login_user, login_required, logout_user, current_user
+from database import db, User
+#from home import home_bp
 
 register_bp = Blueprint('register', __name__)
 
@@ -17,7 +19,7 @@ def register():
     		return redirect(url_for('register.register'))
 
     	# Hash the password before storing it
-    	hashed_password = generate_password_hash(password, method='sha256')
+    	hashed_password = generate_password_hash(password, method='pbkdf2:sha256')
 
     	# Create a new user
     	new_user = User(username=username, password=hashed_password)

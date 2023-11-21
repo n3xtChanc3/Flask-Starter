@@ -6,5 +6,11 @@ home_bp = Blueprint('home', __name__)
 def home():
 	return render_template('home.html')
 
+@home_bp.route('/dashboard')
+def dashboard():
+	return render_template('dashboard.html')
+
+
+
 
 

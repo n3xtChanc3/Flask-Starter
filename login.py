@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from werkzeug.security import check_password_hash
-from app import db, User
+from database import db, User
+from home import home_bp
 
 login_bp = Blueprint('login', __name__)
 
@@ -16,10 +17,10 @@ def login():
 		# Check if the user exists and the password is correct
 		if user and check_password_hash(user.password, password):
 			flash('Login successful!', 'success')
-			return redirect(url_for(home.home))
+			return redirect(url_for('home.dashboard'))
 
 		flash('Invalid username as password. Please try again.', 'danger')
-		return redirect(url_for(login.login))
+		return redirect(url_for('login.login'))
 
 	return render_template('login.html')
     
