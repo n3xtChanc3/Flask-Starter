@@ -7,7 +7,7 @@ import secrets
 from register import register_bp
 from login import login_bp
 from home import home_bp
-from database import db, User
+from database import db, User, ChatMessage
 
 
 # Load environment variables from .env
