@@ -8,6 +8,8 @@ from register import register_bp
 from login import login_bp
 from home import home_bp
 from database import db, User, ChatMessage
+from blog import blog_bp
+from extensions import login_manager
 
 
 # Load environment variables from .env
@@ -17,6 +19,7 @@ app = Flask(__name__)
 
 # Set the SECRET_KEY from the environment variable
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', secrets.token_hex(16))
+login_manager.init_app(app)
 
 # SQLite3 Configuration
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URI', 'sqlite:///site.db')
@@ -32,7 +35,7 @@ with app.app_context():
 app.register_blueprint(register_bp)
 app.register_blueprint(login_bp)
 app.register_blueprint(home_bp)
-
+app.register_blueprint(blog_bp)
 
 #@app.route('/')
 #def hello():
